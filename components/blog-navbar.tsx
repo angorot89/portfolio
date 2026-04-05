@@ -3,6 +3,15 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ContactOptionsDialog } from "@/components/contact-options-dialog";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -74,23 +83,57 @@ export function BlogNavbar() {
           />
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden text-foreground p-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="3" x2="21" y1="6" y2="6" />
-              <line x1="3" x2="21" y1="12" y2="12" />
-              <line x1="3" x2="21" y1="18" y2="18" />
-            </svg>
-          </button>
+          <Sheet>
+            <SheetTrigger asChild>
+              <button className="md:hidden text-foreground p-2" aria-label="Open navigation menu">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="3" x2="21" y1="6" y2="6" />
+                  <line x1="3" x2="21" y1="12" y2="12" />
+                  <line x1="3" x2="21" y1="18" y2="18" />
+                </svg>
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="border-border/70 bg-background/95 backdrop-blur-xl">
+              <SheetHeader className="px-6 pt-12 pb-6">
+                <SheetTitle
+                  className="text-xl tracking-tight"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  folio.
+                </SheetTitle>
+                <SheetDescription>
+                  Navigate through the portfolio.
+                </SheetDescription>
+              </SheetHeader>
+              <div className="flex flex-col px-6 pb-8">
+                {navLinks.map((link) => (
+                  <SheetClose asChild key={link.label}>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "border-b border-border/60 py-4 text-lg transition-colors",
+                        link.href === "/blog"
+                          ? "text-primary"
+                          : "text-foreground hover:text-primary"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  </SheetClose>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </nav>
